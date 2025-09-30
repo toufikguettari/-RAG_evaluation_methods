@@ -913,26 +913,6 @@
                         <p>Production de réponses contextualisées en intégrant les documents récupérés dans le prompt</p>
                     </div>
                 </div>
-
-                <h3>Avantages stratégiques du RAG</h3>
-                <div class="cards-grid">
-                    <div class="card">
-                        <h4>Actualité des informations</h4>
-                        <p>Accès à des données récentes sans nécessiter de réentraînement coûteux du modèle de langue, permettant une mise à jour continue des connaissances.</p>
-                    </div>
-                    <div class="card">
-                        <h4>Spécialisation domaines</h4>
-                        <p>Adaptation à des domaines spécifiques (médical, juridique, technique) via l'intégration de bases de connaissances spécialisées.</p>
-                    </div>
-                    <div class="card">
-                        <h4>Traçabilité et vérification</h4>
-                        <p>Possibilité de citer les sources utilisées, renforçant la confiance et permettant la vérification des affirmations.</p>
-                    </div>
-                    <div class="card">
-                        <h4>Réduction des hallucinations</h4>
-                        <p>Ancrage des réponses dans des documents réels, limitant les inventions et approximations du modèle de génération.</p>
-                    </div>
-                </div>
             </section>
 
             <div class="divider"></div>
@@ -954,30 +934,10 @@
                         <h4>Suivi longitudinal des performances</h4>
                         <p>Le monitoring continu des performances entre les différentes versions permet de s'assurer que les améliorations apportées produisent les effets escomptés et aide à détecter les régressions potentielles, garantissant une amélioration continue et mesurable.</p>
                     </div>
-                    <div class="card">
-                        <h4>Conformité et gouvernance</h4>
-                        <p>Dans les environnements réglementés (santé, finance, juridique), l'évaluation systématique fournit la documentation nécessaire pour démontrer la conformité aux standards de qualité et aux réglementations en vigueur.</p>
-                    </div>
-                </div>
-
-                <h3>Risques d'une évaluation insuffisante</h3>
-                <div class="cards-grid">
-                    <div class="card">
-                        <h4>Hallucinations coûteuses</h4>
-                        <p>Des réponses inventées ou incorrectes peuvent conduire à des décisions erronées avec des conséquences financières, juridiques ou opérationnelles significatives.</p>
-                    </div>
-                    <div class="card">
-                        <h4>Perte de confiance utilisateur</h4>
-                        <p>La diffusion d'informations inexactes érode rapidement la confiance des utilisateurs et peut nuire durablement à la réputation de l'organisation.</p>
-                    </div>
-                    <div class="card">
-                        <h4>Inefficacité opérationnelle</h4>
-                        <p>Un système sous-optimal génère des coûts cachés en temps de traitement, en ressources computationnelles et en interventions manuelles de correction.</p>
-                    </div>
                 </div>
             </section>
 
-            <!-- Les autres sections (TRIAD, Retriever, Générateur, Workflow, Outils, Bonnes pratiques, FAQ) suivent le même modèle détaillé -->
+            <div class="divider"></div>
 
             <section id="triad">
                 <h2>Le Framework TRIAD</h2>
@@ -1003,31 +963,305 @@
                         <p><strong>Métriques associées :</strong> Answer Relevance Score, BLEU, ROUGE, BERTScore</p>
                     </div>
                 </div>
+            </section>
 
-                <h3>Avantages du framework TRIAD</h3>
+            <div class="divider"></div>
+
+            <section id="retriever">
+                <h2>Évaluation du Retriever</h2>
+                <p class="section-intro">L'évaluation du composant de récupération (retriever) est fondamentale car elle impacte directement la qualité des informations disponibles pour la génération des réponses. Un retriever performant est la pierre angulaire d'un système RAG efficace.</p>
+
+                <div class="metric-card">
+                    <h4>Context Precision@K</h4>
+                    <p>Mesure le pourcentage de documents pertinents parmi les K premiers résultats retournés. Cette métrique évalue la qualité des résultats en tête de liste, crucial pour l'expérience utilisateur et l'efficacité du générateur.</p>
+                    <div class="formula">
+                        Precision@K = (Nombre de documents pertinents dans les K premiers) / K
+                    </div>
+                    <p>Cette métrique est particulièrement importante car les utilisateurs consultent principalement les premiers résultats. Une precision élevée garantit que les documents les plus utiles sont immédiatement accessibles.</p>
+                </div>
+
+                <div class="metric-card">
+                    <h4>Context Recall</h4>
+                    <p>Évalue le pourcentage de tous les documents pertinents effectivement récupérés par le système. Cette métrique mesure la complétude de la recherche et la capacité à ne pas omettre d'informations importantes.</p>
+                    <div class="formula">
+                        Recall = (Documents pertinents récupérés) / (Total documents pertinents dans le corpus)
+                    </div>
+                    <p>Le recall est essentiel pour s'assurer qu'aucune information importante n'est omise. Un recall élevé garantit une couverture exhaustive du corpus documentaire.</p>
+                </div>
+
+                <h3>Métriques avancées du retriever</h3>
                 <div class="cards-grid">
                     <div class="card">
-                        <h4>Diagnostic précis</h4>
-                        <p>Permet d'identifier exactement si les problèmes proviennent du retriever, du générateur ou de leur interaction, facilitant les corrections ciblées.</p>
+                        <h4>NDCG (Normalized Discounted Cumulative Gain)</h4>
+                        <p>Mesure la qualité du classement des résultats en tenant compte de la position des documents pertinents. Les documents très pertinents en tête de liste contribuent davantage au score.</p>
                     </div>
                     <div class="card">
-                        <h4>Optimisation des ressources</h4>
-                        <p>Évite les optimisations inutiles en focalisant les efforts sur les composants qui impactent le plus les performances globales.</p>
+                        <h4>MRR (Mean Reciprocal Rank)</h4>
+                        <p>Calcule la moyenne des inverses des positions du premier document pertinent pour chaque requête. Utile lorsque seul le premier résultat pertinent importe.</p>
                     </div>
                     <div class="card">
-                        <h4>Communication efficace</h4>
-                        <p>Fournit un langage commun et structuré pour discuter des performances avec les parties prenantes techniques et non techniques.</p>
+                        <h4>MAP (Mean Average Precision)</h4>
+                        <p>Moyenne des précisions moyennes pour chaque requête, particulièrement utile pour les scénarios où plusieurs documents pertinents sont attendus.</p>
                     </div>
                 </div>
             </section>
 
-            <!-- Sections suivantes similaires avec le même niveau de détail -->
+            <div class="divider"></div>
 
-            <div class="cta-section">
-                <h3>Prêt à optimiser votre système RAG ?</h3>
-                <p>Notre équipe d'experts peut vous accompagner dans l'évaluation, l'optimisation et le déploiement de votre solution RAG pour garantir des performances maximales en production.</p>
-                <a href="#contact" class="btn">Contactez nos experts</a>
-            </div>
+            <section id="generateur">
+                <h2>Évaluation du Générateur</h2>
+                <p class="section-intro">L'évaluation du composant de génération est cruciale pour garantir la qualité, la précision et l'utilité des réponses finales produites par le système RAG.</p>
+                
+                <h3>Métriques de similarité textuelle</h3>
+                <p>L'évaluation de la qualité des réponses générées nécessite des métriques spécialisées qui comparent la sortie du système avec des références établies.</p>
+
+                <div class="metric-card">
+                    <h4>BLEU Score</h4>
+                    <p>Cette métrique compare la réponse générée à une réponse de référence en analysant les n-grammes communs. Plus le score est élevé (proche de 1), plus la similarité est importante. Le BLEU Score est particulièrement efficace pour évaluer la précision lexicale et la structure des réponses.</p>
+                    <p><strong>Principe :</strong> Calcul de la précision pondérée des n-grammes (1 à 4 mots) avec une pénalité pour les réponses trop courtes.</p>
+                </div>
+
+                <div class="example-box">
+                    <strong>Exemple d'évaluation BLEU</strong>
+                    <p><strong>Réponse générée :</strong> "La photosynthèse permet aux plantes de convertir la lumière solaire en énergie chimique."</p>
+                    <p><strong>Référence :</strong> "Les plantes utilisent la photosynthèse pour transformer l'énergie lumineuse en énergie chimique."</p>
+                    <p><span class="score-badge">BLEU Score : ~0.65</span> — Forte similarité sémantique malgré les variations lexicales</p>
+                </div>
+
+                <h3>Mesure de la fidélité aux sources</h3>
+                
+                <div class="metric-card">
+                    <h4>Faithfulness (Fidélité)</h4>
+                    <p>La faithfulness représente une métrique cruciale qui vérifie si la réponse générée respecte scrupuleusement les informations contenues dans les documents sources. Cette dimension est essentielle pour maintenir la crédibilité et la fiabilité du système RAG.</p>
+                    
+                    <p><strong>Principe de calcul :</strong> La faithfulness analyse chaque affirmation présente dans la réponse générée et vérifie sa correspondance avec les informations des documents sources. Cette vérification peut être automatisée via des modèles de NLI (Natural Language Inference).</p>
+                    
+                    <div class="formula">
+                        Faithfulness = (Nombre d'affirmations vérifiables et correctes) / (Nombre total d'affirmations)
+                    </div>
+                    
+                    <p><strong>Échelle d'évaluation :</strong> Le score varie de 0 à 1, où 0 indique qu'aucune information n'est correcte et 1 signifie que toutes les affirmations sont parfaitement fidèles aux sources.</p>
+                </div>
+
+                <div class="example-box">
+                    <strong>Exemple d'une réponse fidèle</strong>
+                    <p><strong>Document source :</strong> "L'entreprise a enregistré une croissance de 15% au T3 2024."</p>
+                    <p><strong>Réponse générée :</strong> "Selon les données, la croissance au troisième trimestre 2024 s'élève à 15%."</p>
+                    <p><span class="score-badge">Faithfulness : 1.0</span> — Parfaite fidélité aux sources</p>
+                </div>
+
+                <div class="example-box negative">
+                    <strong>Exemple d'une réponse non fidèle</strong>
+                    <p><strong>Document source :</strong> "L'entreprise a enregistré une croissance de 15% au T3 2024."</p>
+                    <p><strong>Réponse générée :</strong> "La société affiche une croissance exceptionnelle de 25% ce trimestre."</p>
+                    <p><span class="score-badge negative">Faithfulness : 0.0</span> — Informations incorrectes et inventées</p>
+                </div>
+
+                <h3>Métriques de qualité de réponse</h3>
+                <div class="cards-grid">
+                    <div class="card">
+                        <h4>Answer Relevance</h4>
+                        <p>Évalue dans quelle mesure la réponse répond directement à la question posée, sans informations superflues ou hors-sujet.</p>
+                    </div>
+                    <div class="card">
+                        <h4>ROUGE Score</h4>
+                        <p>Similarité avec BLEU mais plus adapté pour l'évaluation de résumé, mesurant le rappel des n-grammes entre la réponse et la référence.</p>
+                    </div>
+                    <div class="card">
+                        <h4>BERTScore</h4>
+                        <p>Utilise les embeddings BERT pour calculer la similarité sémantique plutôt que lexicale, capturant mieux la similarité de meaning.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <section id="workflow">
+                <h2>Workflow complet d'évaluation</h2>
+                <p class="section-intro">Le processus d'évaluation d'un système RAG suit un workflow structuré qui intègre l'ensemble des métriques et composants pour fournir une vision complète des performances. Cette approche systématique garantit une évaluation exhaustive et actionnable.</p>
+
+                <div class="workflow-list">
+                    <div class="workflow-item">
+                        <div class="workflow-number">1</div>
+                        <div class="workflow-content">
+                            <h4>Préparation des données de test</h4>
+                            <p>Création d'un ensemble de questions représentatives couvrant les différents cas d'usage, difficultés et domaines thématiques. Annotation manuelle des réponses de référence et des documents pertinents attendus.</p>
+                        </div>
+                    </div>
+                    <div class="workflow-item">
+                        <div class="workflow-number">2</div>
+                        <div class="workflow-content">
+                            <h4>Configuration de l'évaluation</h4>
+                            <p>Paramétrage des métriques, définition des seuils de performance acceptables, configuration des outils d'évaluation automatisée et préparation de l'environnement de test.</p>
+                        </div>
+                    </div>
+                    <div class="workflow-item">
+                        <div class="workflow-number">3</div>
+                        <div class="workflow-content">
+                            <h4>Exécution des tests</h4>
+                            <p>Lancement de l'évaluation sur l'ensemble des questions de test, collecte systématique des résultats pour chaque métrique et chaque composant du système RAG.</p>
+                        </div>
+                    </div>
+                    <div class="workflow-item">
+                        <div class="workflow-number">4</div>
+                        <div class="workflow-content">
+                            <h4>Analyse des résultats</h4>
+                            <p>Examen détaillé des performances selon le framework TRIAD, identification des points forts et des axes d'amélioration, analyse des corrélations entre les différentes métriques.</p>
+                        </div>
+                    </div>
+                    <div class="workflow-item">
+                        <div class="workflow-number">5</div>
+                        <div class="workflow-content">
+                            <h4>Optimisation et itération</h4>
+                            <p>Implémentation des correctifs identifiés, réévaluation pour mesurer l'amélioration, et itération jusqu'à l'atteinte des objectifs de performance définis.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Outils d'automatisation du workflow</h3>
+                <div class="process-flow">
+                    <div class="process-step">
+                        <div class="process-icon">⚡</div>
+                        <strong>RAGAS</strong>
+                        <p>Framework spécialisé pour l'évaluation automatisée des systèmes RAG avec métriques prédéfinies</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-icon">🔧</div>
+                        <strong>LlamaIndex</strong>
+                        <p>Toolkit complet avec fonctionnalités d'évaluation intégrées pour les pipelines RAG</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-icon">🤖</div>
+                        <strong>LangChain</strong>
+                        <p>Plateforme avec evaluateurs pour tester les différents composants des chaînes RAG</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-icon">📊</div>
+                        <strong>Evaluation Harness</strong>
+                        <p>Environnement de test unifié pour benchmarks comparatifs des systèmes RAG</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <section id="outils">
+                <h2>Outils et frameworks d'évaluation</h2>
+                <p class="section-intro">Découvrez l'écosystème complet des outils spécialisés pour l'évaluation des systèmes RAG, des frameworks automatisés aux solutions de monitoring en production.</p>
+
+                <h3>Frameworks principaux</h3>
+                <div class="tool-grid">
+                    <div class="tool-card">
+                        <h4>RAGAS</h4>
+                        <p>Framework open-source spécialisé dans l'évaluation des systèmes RAG avec des métriques sans référence (reference-free) pour Context Precision, Faithfulness et Answer Relevance.</p>
+                        <div>
+                            <span class="tool-tag">Python</span>
+                            <span class="tool-tag">Automatisé</span>
+                            <span class="tool-tag">Sans référence</span>
+                        </div>
+                    </div>
+                    <div class="tool-card">
+                        <h4>LlamaIndex</h4>
+                        <p>Toolkit complet pour la construction et l'évaluation de systèmes RAG avec des evaluateurs intégrés pour la qualité des réponses et la fidélité aux sources.</p>
+                        <div>
+                            <span class="tool-tag">Python</span>
+                            <span class="tool-tag">Intégré</span>
+                            <span class="tool-tag">Production</span>
+                        </div>
+                    </div>
+                    <div class="tool-card">
+                        <h4>LangChain</h4>
+                        <p>Framework populaire avec des composants d'évaluation pour tester les chaînes RAG, incluant des evaluateurs de string, de tracé et de comparaison.</p>
+                        <div>
+                            <span class="tool-tag">Python/JS</span>
+                            <span class="tool-tag">Modulaire</span>
+                            <span class="tool-tag">Flexible</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Solutions de monitoring</h3>
+                <div class="tool-grid">
+                    <div class="tool-card">
+                        <h4>Arize AI</h4>
+                        <p>Plateforme de monitoring pour systèmes ML incluant le tracking des performances RAG en production avec alertes et analyses de drift.</p>
+                        <div>
+                            <span class="tool-tag">Cloud</span>
+                            <span class="tool-tag">Monitoring</span>
+                            <span class="tool-tag">Production</span>
+                        </div>
+                    </div>
+                    <div class="tool-card">
+                        <h4>WhyLabs</h4>
+                        <p>Solution de observability pour surveiller la qualité des données et des prédictions des systèmes RAG en environnement de production.</p>
+                        <div>
+                            <span class="tool-tag">SaaS</span>
+                            <span class="tool-tag">Observability</span>
+                            <span class="tool-tag">MLOps</span>
+                        </div>
+                    </div>
+                    <div class="tool-card">
+                        <h4>Trulens</h4>
+                        <p>Framework d'évaluation et de monitoring pour applications LLM avec métriques spécifiques RAG et capacités de feedback en temps réel.</p>
+                        <div>
+                            <span class="tool-tag">Python</span>
+                            <span class="tool-tag">Feedback</span>
+                            <span class="tool-tag">Temps réel</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="divider"></div>
+
+            <section id="pratiques">
+                <h2>Bonnes pratiques et recommandations</h2>
+                <p class="section-intro">L'implémentation rigoureuse de ces bonnes pratiques garantit l'efficacité et la pérennité de votre système RAG, tout en optimisant l'utilisation des ressources techniques et humaines.</p>
+
+                <div class="best-practices">
+                    <h3>Recommandations stratégiques</h3>
+                    
+                    <div class="practice-item">
+                        <strong>Évaluation pré-production systématique</strong>
+                        <p>Implémentez systématiquement une phase d'évaluation rigoureuse avant tout déploiement en production. Cette étape critique permet d'identifier et corriger les problèmes potentiels, évitant ainsi des dysfonctionnements coûteux en environnement réel. Utilisez un jeu de données de test représentatif couvrant l'ensemble des cas d'usage.</p>
+                    </div>
+                    
+                    <div class="practice-item">
+                        <strong>Sélection contextualisée des métriques</strong>
+                        <p>Adaptez le choix des métriques aux spécificités et contraintes de votre projet. Un système RAG destiné à des applications critiques nécessitera un accent particulier sur la faithfulness, tandis qu'un assistant conversationnel privilégiera la pertinence des réponses. Évitez la sur-optimisation sur des métriques non pertinentes pour votre use case.</p>
+                    </div>
+                    
+                    <div class="practice-item">
+                        <strong>Application du framework TRIAD</strong>
+                        <p>Utilisez systématiquement les trois dimensions du framework TRIAD pour identifier précisément les points faibles et optimiser les efforts d'amélioration. Cette approche structurée maximise l'efficacité des interventions techniques en évitant les optimisations inutiles.</p>
+                    </div>
+                    
+                    <div class="practice-item">
+                        <strong>Évaluation itérative continue</strong>
+                        <p>Instaurez un processus d'évaluation systématique après chaque mise à jour ou modification du système. Cette approche garantit la stabilité des performances et permet de détecter rapidement les régressions potentielles. Automatisez autant que possible ces évaluations.</p>
+                    </div>
+
+                    <div class="practice-item">
+                        <strong>Benchmarking comparatif</strong>
+                        <p>Établissez des benchmarks de performance pour comparer différentes versions, configurations ou architectures de votre système RAG. Documentez les améliorations et régresseurs pour guider les décisions d'évolution de votre système.</p>
+                    </div>
+                </div>
+
+                <div class="key-points">
+                    <h3>Points clés à retenir</h3>
+                    <p>L'évaluation d'un système RAG assure trois piliers fondamentaux :</p>
+                    <ul>
+                        <li><strong>Fiabilité des réponses produites</strong> - Garantir l'exactitude et la cohérence des informations délivrées aux utilisateurs finaux</li>
+                        <li><strong>Pertinence du contenu récupéré</strong> - Assurer la sélection des documents les plus utiles et complets pour répondre à la question</li>
+                        <li><strong>Fidélité aux sources documentaires</strong> - Maintenir l'ancrage factuel et éviter les hallucinations ou déformations d'information</li>
+                        <li><strong>Performance et efficacité</strong> - Optimiser les temps de réponse et l'utilisation des ressources computationnelles</li>
+                        <li><strong>Évolutivité et maintenabilité</strong> - Faciliter les mises à jour et l'adaptation aux nouveaux besoins métier</li>
+                    </ul>
+                    <p>Les métriques constituent des outils précieux pour améliorer le système de manière itérative et mesurable, guidant les équipes techniques vers l'excellence opérationnelle et la satisfaction utilisateur.</p>
+                </div>
+            </section>
+
+            <div class="divider"></div>
 
             <section id="faq">
                 <h2>Questions Fréquentes (FAQ)</h2>
@@ -1035,19 +1269,44 @@
                 <div class="faq-item">
                     <div class="faq-question">Quelle est la différence entre l'évaluation du retriever et du générateur ?</div>
                     <div class="faq-answer">
-                        <p>L'évaluation du retriever se concentre sur sa capacité à trouver les documents les plus pertinents (précision, rappel), tandis que l'évaluation du générateur mesure la qualité des réponses produites (fidélité, pertinence, fluidité). Le framework TRIAD permet d'évaluer ces deux composants séparément et leurs interactions.</p>
+                        <p>L'évaluation du retriever se concentre sur sa capacité à trouver les documents les plus pertinents (précision, rappel, qualité du classement), tandis que l'évaluation du générateur mesure la qualité des réponses produites (fidélité aux sources, pertinence à la question, fluidité linguistique). Le framework TRIAD permet d'évaluer ces deux composants séparément et leurs interactions.</p>
                     </div>
                 </div>
                 
                 <div class="faq-item">
                     <div class="faq-question">Combien de données sont nécessaires pour une évaluation fiable ?</div>
                     <div class="faq-answer">
-                        <p>Pour une évaluation statistiquement significative, nous recommandons un ensemble d'au moins 100-200 questions représentatives couvrant les différents cas d'usage et niveaux de difficulté. La qualité et la représentativité des données sont plus importantes que la quantité pure.</p>
+                        <p>Pour une évaluation statistiquement significative, nous recommandons un ensemble d'au moins 100-200 questions représentatives couvrant les différents cas d'usage et niveaux de difficulté. La qualité et la représentativité des données sont plus importantes que la quantité pure. Pour les systèmes critiques, envisagez 500+ questions.</p>
                     </div>
                 </div>
-                
-                <!-- Ajouter d'autres questions/réponses -->
+
+                <div class="faq-item">
+                    <div class="faq-question">Quelles métriques prioriser pour un système RAG en production ?</div>
+                    <div class="faq-answer">
+                        <p>Pour la production, priorisez Faithfulness (fidélité aux sources) et Answer Relevance (pertinence de la réponse) car elles impactent directement l'expérience utilisateur. Context Precision@K est également crucial pour l'efficacité du système. Surveillez ces métriques en continu avec des alertes sur les baisses de performance.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Comment automatiser l'évaluation des systèmes RAG ?</div>
+                    <div class="faq-answer">
+                        <p>Utilisez des frameworks comme RAGAS, LlamaIndex ou LangChain qui fournissent des evaluateurs automatisés. Intégrez ces évaluations dans vos pipelines CI/CD et configurez des dashboards de monitoring pour suivre les performances dans le temps. L'automatisation permet des évaluations fréquentes et reproductibles.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Quels sont les pièges courants à éviter dans l'évaluation RAG ?</div>
+                    <div class="faq-answer">
+                        <p>Les pièges courants incluent : sur-optimiser une seule métrique au détriment des autres, utiliser des jeux de test non représentatifs, négliger l'évaluation de la fidélité aux sources, et ne pas prendre en compte la performance en conditions réelles (latence, coût). Adoptez une approche holistique avec le framework TRIAD pour éviter ces écueils.</p>
+                    </div>
+                </div>
             </section>
+
+            <div class="cta-section">
+                <h3>Prêt à optimiser votre système RAG ?</h3>
+                <p>Notre équipe d'experts peut vous accompagner dans l'évaluation, l'optimisation et le déploiement de votre solution RAG pour garantir des performances maximales en production.</p>
+                <a href="#contact" class="btn">Contactez nos experts</a>
+            </div>
         </div>
     </main>
 
@@ -1065,13 +1324,15 @@
             const sections = document.querySelectorAll('section');
             const navLinks = document.querySelectorAll('nav a');
             
-            window.addEventListener('scroll', function() {
+            // Fonction pour mettre à jour la navigation active
+            function updateActiveNav() {
                 let current = '';
+                const scrollPosition = window.scrollY + 100;
                 
                 sections.forEach(section => {
                     const sectionTop = section.offsetTop;
                     const sectionHeight = section.clientHeight;
-                    if (scrollY >= (sectionTop - 150)) {
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
                         current = section.getAttribute('id');
                     }
                 });
@@ -1080,6 +1341,28 @@
                     link.classList.remove('active');
                     if (link.getAttribute('href').substring(1) === current) {
                         link.classList.add('active');
+                    }
+                });
+            }
+            
+            // Écouter le scroll
+            window.addEventListener('scroll', updateActiveNav);
+            
+            // Mettre à jour au chargement initial
+            updateActiveNav();
+            
+            // Navigation fluide
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    if (targetSection) {
+                        window.scrollTo({
+                            top: targetSection.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
                     }
                 });
             });
